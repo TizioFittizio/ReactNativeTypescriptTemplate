@@ -1,34 +1,34 @@
-import React from "react"
-import { StyleSheet, View } from "react-native"
-import { Button, Text } from 'native-base'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Text } from 'native-base';
 
 export interface Props {
-  name: string
-  enthusiasmLevel?: number
-  onIncrement?: () => void
-  onDecrement?: () => void
+  name: string;
+  enthusiasmLevel?: number;
+  onIncrement?: () => void;
+  onDecrement?: () => void;
 }
 
 interface State {
-  enthusiasmLevel: number
+  enthusiasmLevel: number;
 }
 
 export class StateComponent extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props)
+    super(props);
 
     if ((props.enthusiasmLevel || 0) <= 0) {
-      throw new Error("You could be a little more enthusiastic. :D")
+      throw new Error("You could be a little more enthusiastic. :D");
     }
 
     this.state = {
       enthusiasmLevel: props.enthusiasmLevel || 1
-    }
+    };
   }
 
   onIncrement = () => this.setState({ enthusiasmLevel: this.state.enthusiasmLevel + 1 });
   onDecrement = () => this.setState({ enthusiasmLevel: this.state.enthusiasmLevel - 1 });
-  getExclamationMarks = (numChars: number) => Array(numChars + 1).join("!")
+  getExclamationMarks = (numChars: number) => Array(numChars + 1).join("!");
 
   render() {
     return (
@@ -59,7 +59,7 @@ export class StateComponent extends React.Component<Props, State> {
           </View>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
     color: "#999",
     fontWeight: "bold"
   }
-})
+});

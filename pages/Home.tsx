@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { Props } from './../components/StateComponent';
 import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body, Toast } from 'native-base';
 import { StyleSheet, Linking } from 'react-native';
@@ -22,13 +22,12 @@ export class Home extends React.Component<{}, {}> {
         }
         catch (e){
             Toast.show({
-                text: (e+''),
+                text: (e + ''),
                 type: 'danger'
-            })
+            });
         }
-        
     }
-    
+
     render(){
         return (
             <Container>
@@ -94,7 +93,7 @@ export class Home extends React.Component<{}, {}> {
                     </List>
                 </Content>
             </Container>
-        )
+        );
     }
 }
 
@@ -106,4 +105,4 @@ const styles = StyleSheet.create({
     listItem: {
         flex: 1
     }
-})
+});
