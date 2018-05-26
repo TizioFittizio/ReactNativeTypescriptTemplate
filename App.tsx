@@ -4,18 +4,19 @@
  * @flow
  */
 
-import React from 'react'
+import React, { Props } from 'react';
 import { Component } from 'react';
 import {
   Platform,
   StyleSheet,
   Text,
   View
-} from 'react-native'
+} from 'react-native';
 import { StateComponent } from './components/StateComponent';
 import { Home } from './pages/Home';
-import { NativeRouter } from 'react-router-native';
+import { NativeRouter, Route, Link, Switch } from 'react-router-native';
 import { Root } from 'native-base';
+import { Authentication } from './pages/Authentication';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -24,18 +25,18 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+
+  constructor(props: any){
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <Root>
-        <NativeRouter>
-
-        <Home />
-        </NativeRouter>
+        <Home/>
       </Root>
-      
     );
   }
 }
-

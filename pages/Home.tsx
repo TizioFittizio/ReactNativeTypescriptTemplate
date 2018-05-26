@@ -4,7 +4,7 @@ import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body, T
 import { StyleSheet, Linking } from 'react-native';
 import { CONTRIBUTE_URL } from './../constants';
 
-export class Home extends React.Component<{}, {}> {
+export class Home extends React.Component {
 
     /**
      * Function executed on contribute item pressed
