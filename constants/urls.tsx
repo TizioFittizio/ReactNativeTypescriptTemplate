@@ -1,0 +1,1 @@
+export const CONTRIBUTE_URL = 'https://github.com/TizioFittizio/ReactNativeTypescriptTemplate';

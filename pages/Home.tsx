@@ -1,9 +1,33 @@
 import React from "react";
 import { Props } from './../components/StateComponent';
-import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body, Toast } from 'native-base';
+import { StyleSheet, Linking } from 'react-native';
+import { CONTRIBUTE_URL } from './../constants';
 
 export class Home extends React.Component<{}, {}> {
+
+    /**
+     * Function executed on contribute item pressed
+     * Attempt to open repository URL
+     */
+    async onListItemContributePress(){
+        try {
+            const canOpenUrl = await Linking.canOpenURL(CONTRIBUTE_URL);
+            if (canOpenUrl) {
+                Linking.openURL(CONTRIBUTE_URL);
+            }
+            else {
+                throw new Error('Can\'t open url');
+            }
+        }
+        catch (e){
+            Toast.show({
+                text: (e+''),
+                type: 'danger'
+            })
+        }
+        
+    }
     
     render(){
         return (
@@ -59,7 +83,7 @@ export class Home extends React.Component<{}, {}> {
                                 <Text>Pick Image</Text>
                             </Body>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={this.onListItemContributePress}>
                             <Left>
                                 <Icon type="Ionicons" name="logo-octocat" />
                             </Left>

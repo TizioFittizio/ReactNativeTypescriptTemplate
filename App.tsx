@@ -15,6 +15,7 @@ import {
 import { StateComponent } from './components/StateComponent';
 import { Home } from './pages/Home';
 import { NativeRouter } from 'react-router-native';
+import { Root } from 'native-base';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -27,9 +28,13 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <NativeRouter>
+      <Root>
+        <NativeRouter>
+
         <Home />
-      </NativeRouter>
+        </NativeRouter>
+      </Root>
+      
     );
   }
 }
