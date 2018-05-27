@@ -7,22 +7,20 @@ interface State {
     email: string;
     password: string;
     isAuthenticating: boolean;
-    passwordReference?: any;
 }
 
-interface Props {
+export interface Props {
     navigation: NavigationScreenProp<State>;
+    userProfile: any;
+    login: (username: string, password: string) => void;
 }
 
 export class Authentication extends React.Component<Props, State> {
 
     constructor(props: Props){
         super(props);
-        this.state = {
-            email: "",
-            password: "",
-            isAuthenticating: false
-        };
+        console.warn(this.props, this.state);
+        this.props.login('asd', 'asd');
     }
 
     render(){

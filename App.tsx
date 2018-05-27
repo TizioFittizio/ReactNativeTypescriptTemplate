@@ -1,22 +1,26 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
+// React
 import React, { Props } from 'react';
 import { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import { StateComponent } from './components/StateComponent';
-import { Home } from './pages/Home';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+
+// Redux
+import { Provider } from 'react-redux';
+import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { createStore } from 'redux';
+import { StoreState } from './constants';
+import reducers from './reducers';
+import { authReducer } from './reducers/authReducer';
+
+// React Navigator
 import { StackNavigator } from 'react-navigation';
 import { Root } from 'native-base';
-import { Authentication } from './pages/Authentication';
+
+// Containers
+import Authentication from './containers/Authentication';
+import { Home } from './pages/Home';
+import { AnyAction } from 'redux';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -40,6 +44,8 @@ const Routes = StackNavigator({
   }
 });
 
+const store = createStore(reducers, {}, applyMiddleware(thunk));
+
 export default class App extends Component {
 
   constructor(props: any){
@@ -49,9 +55,11 @@ export default class App extends Component {
 
   render() {
     return (
-      <Root>
-        <Routes />
-      </Root>
+      <Provider store={store}>
+        <Root>
+          <Routes />
+        </Root>
+      </Provider>
     );
   }
 }
