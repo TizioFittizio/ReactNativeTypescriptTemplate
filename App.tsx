@@ -35,7 +35,7 @@ const Routes = StackNavigator({
   Authentication: {
     screen: Authentication,
     navigationOptions: {
-
+      title: 'Authenticate'
     }
   }
 });
