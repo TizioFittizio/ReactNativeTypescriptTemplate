@@ -1,12 +1,21 @@
 import React from "react";
 import { Container, Text } from 'native-base';
+import { NavigationScreenProp } from "react-navigation";
 
-export class Authentication extends React.Component {
+interface State {
+
+}
+
+interface Props {
+    navigation: NavigationScreenProp<State>;
+}
+
+export class Authentication extends React.Component<Props, State> {
 
     render(){
         return (
             <Container>
-                <Text>Bombas Bombas</Text>
+                <Text>New Page</Text>
             </Container>
         );
     }

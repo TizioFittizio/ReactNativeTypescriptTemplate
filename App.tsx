@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { StateComponent } from './components/StateComponent';
 import { Home } from './pages/Home';
-import { NativeRouter, Route, Link, Switch } from 'react-router-native';
+import { StackNavigator } from 'react-navigation';
 import { Root } from 'native-base';
 import { Authentication } from './pages/Authentication';
 
@@ -23,6 +23,21 @@ const instructions = Platform.select({
     'Cmd+D or shake for dev menu',
   android: 'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
+});
+
+const Routes = StackNavigator({
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      title: 'ReactNative + Typescript!'
+    }
+  },
+  Authentication: {
+    screen: Authentication,
+    navigationOptions: {
+
+    }
+  }
 });
 
 export default class App extends Component {
@@ -35,7 +50,7 @@ export default class App extends Component {
   render() {
     return (
       <Root>
-        <Home/>
+        <Routes />
       </Root>
     );
   }

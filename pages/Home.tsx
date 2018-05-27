@@ -1,16 +1,33 @@
 import React from 'react';
-import { Props } from './../components/StateComponent';
 import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body, Toast } from 'native-base';
 import { StyleSheet, Linking } from 'react-native';
 import { CONTRIBUTE_URL } from './../constants';
+import { NavigationScreenProp } from 'react-navigation';
 
-export class Home extends React.Component {
+interface State {
+
+}
+
+interface Props {
+    navigation: NavigationScreenProp<State>;
+}
+
+export class Home extends React.Component<Props, State> {
+
+    constructor(props: Props){
+        super(props);
+        this.onListItemAuthenticationPressed = this.onListItemAuthenticationPressed.bind(this);
+    }
+
+    onListItemAuthenticationPressed() {
+        this.props.navigation.navigate('Authentication');
+    }
 
     /**
      * Function executed on contribute item pressed
      * Attempt to open repository URL
      */
-    async onListItemContributePress(){
+    async onListItemContributePressed(){
         try {
             const canOpenUrl = await Linking.canOpenURL(CONTRIBUTE_URL);
             if (canOpenUrl) {
@@ -32,9 +49,8 @@ export class Home extends React.Component {
         return (
             <Container>
                 <Content>
-                    <H1 style={styles.title}>ReactNative + Typescript!</H1>
                     <List>
-                        <ListItem icon style={styles.listItem}>
+                        <ListItem icon onPress={this.onListItemAuthenticationPressed}>
                             <Left>
                                 <Icon type="Ionicons" name="key" />
                             </Left>
@@ -82,7 +98,7 @@ export class Home extends React.Component {
                                 <Text>Pick Image</Text>
                             </Body>
                         </ListItem>
-                        <ListItem icon onPress={this.onListItemContributePress}>
+                        <ListItem icon onPress={this.onListItemContributePressed}>
                             <Left>
                                 <Icon type="Ionicons" name="logo-octocat" />
                             </Left>
@@ -96,13 +112,3 @@ export class Home extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    title: {
-        margin: 10,
-        textAlign: 'center'
-    },
-    listItem: {
-        flex: 1
-    }
-});
