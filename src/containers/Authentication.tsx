@@ -3,6 +3,7 @@ import { Dispatch, connect } from "react-redux";
 import { AuthAction } from "../actions/authActions";
 import { login } from './../actions/authActions';
 import { Authentication, Props } from './../pages/Authentication';
+import { bindActionCreators } from "redux";
 
 export function mapStateToProps({userProfile}: StoreState) {
     return {
@@ -12,7 +13,7 @@ export function mapStateToProps({userProfile}: StoreState) {
 
 export function mapDispatchToProps(dispatch: Dispatch<AuthAction>) {
     return {
-        login: () => dispatch(login('ma', 'che minchia'))
+        login: bindActionCreators(login, dispatch)
     };
 }
 

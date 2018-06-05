@@ -13,7 +13,7 @@ export interface LoginFailedAction {
 }
 
 export const login = (username: string, password: string) => {
-    console.warn('Io sono l\'action!');
+    console.warn(username, password);
     return {
         type: LOGIN_SUCCESS,
         payload: "jkjkjasd"
