@@ -1,23 +1,33 @@
-import { LOGIN_SUCCESS } from './../constants';
+import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_LOADING } from './../constants';
 import { LoginSuccessAction } from './authActions';
-import { AnyAction } from 'redux';
 import { Toast } from 'native-base';
-import { LOGIN_FAILED } from './../constants/actionTypes';
-import { ThunkAction } from 'redux-thunk';
-import { ActionCreator } from 'redux';
 import { Dispatch } from 'react-redux';
+
+export interface LoginLoadingAction {
+    type: LOGIN_LOADING;
+}
 
 export interface LoginSuccessAction {
     type: LOGIN_SUCCESS;
-    payload: any;
 }
 
 export interface LoginFailedAction {
     type: LOGIN_FAILED;
-    payload: any;
 }
 
 export const login = (username: string, password: string) => {
+    console.warn(username, password);
+    return async (dispatch: Dispatch) => {
+        dispatch({
+            type: LOGIN_LOADING,
+        });
+        await new Promise((res) => {
+            setTimeout(res, 3000);
+        });
+        dispatch({
+            type: LOGIN_SUCCESS
+        });
+    };
     /*return (dispatch: any) => {
         Toast.show({
             text: 'Ma mica funzionerà da qui',
@@ -29,11 +39,11 @@ export const login = (username: string, password: string) => {
             payload: "jkjkjasd"
         });
     };*/
-    return({
+    /* return({
         type: LOGIN_SUCCESS,
         payload: "jkjkjasd"
-    });
+    }); */
     // console.warn(username, password);
 };
 
-export type AuthAction = LoginSuccessAction | LoginFailedAction;
+export type AuthAction = LoginSuccessAction | LoginFailedAction | LoginLoadingAction;

@@ -25,16 +25,8 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
         };
     }
 
-    componentWillUpdate(nextProps: AuthenticationProps, nextState: AuthenticationState){
-        console.warn('Pffff', nextProps);
-    }
-
     login(){
-        /* this.setState({
-            isAuthenticating: true
-        }); */
-        console.warn('Uhm');
-        this.props.login!('asd', 'asd');
+        this.props.login!(this.state.email, this.state.password);
     }
 
     renderLoginButton(){
