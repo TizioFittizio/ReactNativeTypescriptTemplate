@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createStore } from 'redux';
-import { StoreState } from './constants';
 import reducers from './reducers';
 import { authReducer } from './reducers/authReducer';
 
@@ -20,7 +19,6 @@ import { Root } from 'native-base';
 // Containers
 import Authentication from './containers/Authentication';
 import { Home } from './pages/Home';
-import { AnyAction } from 'redux';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +

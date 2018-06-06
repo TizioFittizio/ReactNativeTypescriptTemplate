@@ -1,26 +1,59 @@
 import React from "react";
-import { Container, Text, View, Item, Input, Icon, Button } from 'native-base';
+import { Container, Text, View, Item, Input, Icon, Button, Spinner } from 'native-base';
 import { NavigationScreenProp } from "react-navigation";
 import { StyleSheet } from 'react-native';
 
-interface State {
+export interface AuthenticationState {
     email: string;
     password: string;
+}
+
+export interface AuthenticationProps {
+    navigation?: NavigationScreenProp<AuthenticationState>;
+    userProfile?: any;
+    login?: (username: string, password: string) => void;
     isAuthenticating: boolean;
 }
 
-export interface Props {
-    navigation: NavigationScreenProp<State>;
-    userProfile: any;
-    login: (username: string, password: string) => void;
-}
+export class Authentication extends React.Component<AuthenticationProps, AuthenticationState> {
 
-export class Authentication extends React.Component<Props, State> {
-
-    constructor(props: Props){
+    constructor(props: AuthenticationProps){
         super(props);
-        console.warn(this.props, this.state);
-        this.props.login('asd', 'asd');
+        this.state = {
+            email: "",
+            password: ""
+        };
+    }
+
+    componentWillUpdate(nextProps: AuthenticationProps, nextState: AuthenticationState){
+        console.warn('Pffff', nextProps);
+    }
+
+    login(){
+        /* this.setState({
+            isAuthenticating: true
+        }); */
+        console.warn('Uhm');
+        this.props.login!('asd', 'asd');
+    }
+
+    renderLoginButton(){
+        if (!this.props.isAuthenticating){
+            return (
+                <Button
+                    onPress={() => this.login()}
+                    block
+                    style={styles.loginButton}
+                >
+                    <Text>Login</Text>
+                </Button>
+            );
+        }
+        else {
+            return (
+                <Spinner color="blue" size="large" />
+            );
+        }
     }
 
     render(){
@@ -30,25 +63,27 @@ export class Authentication extends React.Component<Props, State> {
                 <Item style={styles.input}>
                     <Icon type="Ionicons" name="mail" />
                     <Input
+                        disabled={this.props.isAuthenticating}
                         keyboardType="email-address"
                         placeholder="Email"
                         returnKeyType="next"
-                        onChangeText={email => this.setState({...this.state, email})}
+                        onChangeText={email => this.setState({email})}
+                        value={this.state.email}
                     />
                 </Item>
                 <Item style={styles.input}>
                     <Icon type="Ionicons" name="key" />
                     <Input
+                        disabled={this.props.isAuthenticating}
                         placeholder="Password"
                         secureTextEntry
                         returnKeyType="done"
                         autoCorrect={false}
-                        onChangeText={password => this.setState({...this.state, password})}
+                        onChangeText={password => this.setState({password})}
+                        value={this.state.password}
                     />
                 </Item>
-                <Button block style={styles.loginButton} >
-                    <Text>Login</Text>
-                </Button>
+                {this.renderLoginButton()}
             </Container>
         );
     }
