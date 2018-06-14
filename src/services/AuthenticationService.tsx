@@ -2,6 +2,7 @@ import axios from "axios";
 import { LOGIN_URL } from "../constants";
 import ServiceReponse from './../models/ServiceResponse';
 import User from "../models/User";
+import { testCredentials } from './../constants/testCredentials';
 
 export default class AuthenticationService {
 
@@ -16,7 +17,9 @@ export default class AuthenticationService {
 
     public login = async (username: string, password: string) => {
         try {
-            const response = await axios.post(LOGIN_URL, {
+
+            // Real world implementation
+            /* const response = await axios.post(LOGIN_URL, {
                 email: username,
                 password
             }, {
@@ -35,7 +38,24 @@ export default class AuthenticationService {
                     return new ServiceReponse<User>(null, 'Authentication failed');
                 default:
                     return new ServiceReponse<User>(null, 'An error has occurred');
+            } */
+
+            // Fake credentials implementation
+            await new Promise((resolve) => {
+                setTimeout(resolve, 2000);
+            });
+            if (username === testCredentials.email && password === testCredentials.password) {
+                const userReturned = new User();
+                userReturned.firstName = "John";
+                userReturned.lastName = "Doe";
+                userReturned.nickname = "JohnDoeAdmin";
+                userReturned.token = "12345";
+                return new ServiceReponse<User>(userReturned);
             }
+            else {
+                return new ServiceReponse<User>(null, 'Authentication failed');
+            }
+
         }
         catch (e){
             console.warn(e);

@@ -3,6 +3,7 @@ import { LoginSuccessAction } from './authActions';
 import { Toast } from 'native-base';
 import { Dispatch } from 'react-redux';
 import AuthenticationService from './../services/AuthenticationService';
+import User from './../models/User';
 
 export interface LoginLoadingAction {
     type: LOGIN_LOADING;
@@ -10,6 +11,7 @@ export interface LoginLoadingAction {
 
 export interface LoginSuccessAction {
     type: LOGIN_SUCCESS;
+    payload: User;
 }
 
 export interface LoginFailedAction {
@@ -22,7 +24,6 @@ export const login = (username: string, password: string) => {
             type: LOGIN_LOADING,
         });
         const loginResponse = await AuthenticationService.getInstance().login(username, password);
-        console.warn(loginResponse);
         if (loginResponse.error){
             Toast.show({
                 text: loginResponse.error,
@@ -33,14 +34,15 @@ export const login = (username: string, password: string) => {
                 type: LOGIN_FAILED
             });
         }
-        else {                                           // devi testare
+        else {
             Toast.show({
-                text: 'Succesfull authentication',
+                text: 'Authentication succesfull ',
                 position: 'top',
                 type: 'success'
             });
             dispatch({
-                type: LOGIN_SUCCESS
+                type: LOGIN_SUCCESS,
+                payload: loginResponse.response
             });
         }
     };

@@ -1,9 +1,10 @@
 import React from "react";
-import { Container, Text, View, Item, Input, Icon, Button, Spinner } from 'native-base';
+import { Container, Text, View, Item, Input, Icon, Button, Spinner, Content, H1, H2, H3 } from 'native-base';
 import { NavigationScreenProp } from "react-navigation";
 import { StyleSheet } from 'react-native';
 import MenuService from './../services/MenuService';
 import { Alert } from "react-native";
+import User from './../models/User';
 
 export interface AuthenticationState {
     email: string;
@@ -12,7 +13,7 @@ export interface AuthenticationState {
 
 export interface AuthenticationProps {
     navigation?: NavigationScreenProp<AuthenticationState>;
-    userProfile?: any;
+    userProfile?: User;
     login?: (username: string, password: string) => void;
     isAuthenticating: boolean;
 }
@@ -62,7 +63,7 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
         }
     }
 
-    render(){
+    renderAuthenticationForm(){
         return (
             <Container style={styles.container}>
                 <View style={styles.logo} />
@@ -75,6 +76,7 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
                         returnKeyType="next"
                         onChangeText={email => this.setState({email})}
                         value={this.state.email}
+                        autoCapitalize="none"
                     />
                 </Item>
                 <Item style={styles.input}>
@@ -87,11 +89,34 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
                         autoCorrect={false}
                         onChangeText={password => this.setState({password})}
                         value={this.state.password}
+                        autoCapitalize="none"
                     />
                 </Item>
                 {this.renderLoginButton()}
             </Container>
         );
+    }
+
+    renderProfile(){
+        const { firstName, lastName } = this.props.userProfile!;
+        return (
+            <Container style={styles.container}>
+                <Content>
+                    <H1>You are logged as {firstName} {lastName} !</H1>
+                    <H3> • You will stay logged even if you close the application</H3>
+                    <H3> • You can logout from the top menu</H3>
+                </Content>
+            </Container>
+        );
+    }
+
+    render(){
+        if (!this.props.userProfile){
+            return this.renderAuthenticationForm();
+        }
+        else {
+            return this.renderProfile();
+        }
     }
 }
 
@@ -100,7 +125,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     logo: {
-        height: 100
+        height: 150
     },
     input: {
         borderColor: 'black'
