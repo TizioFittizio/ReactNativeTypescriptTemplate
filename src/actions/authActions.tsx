@@ -2,6 +2,7 @@ import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_LOADING } from './../constants';
 import { LoginSuccessAction } from './authActions';
 import { Toast } from 'native-base';
 import { Dispatch } from 'react-redux';
+import AuthenticationService from './../services/AuthenticationService';
 
 export interface LoginLoadingAction {
     type: LOGIN_LOADING;
@@ -16,34 +17,33 @@ export interface LoginFailedAction {
 }
 
 export const login = (username: string, password: string) => {
-    console.warn(username, password);
     return async (dispatch: Dispatch) => {
         dispatch({
             type: LOGIN_LOADING,
         });
-        await new Promise((res) => {
-            setTimeout(res, 3000);
-        });
-        dispatch({
-            type: LOGIN_SUCCESS
-        });
+        const loginResponse = await AuthenticationService.getInstance().login(username, password);
+        console.warn(loginResponse);
+        if (loginResponse.error){
+            Toast.show({
+                text: loginResponse.error,
+                position: 'top',
+                type: 'danger'
+            });
+            dispatch({
+                type: LOGIN_FAILED
+            });
+        }
+        else {                                           // devi testare
+            Toast.show({
+                text: 'Succesfull authentication',
+                position: 'top',
+                type: 'success'
+            });
+            dispatch({
+                type: LOGIN_SUCCESS
+            });
+        }
     };
-    /*return (dispatch: any) => {
-        Toast.show({
-            text: 'Ma mica funzionerà da qui',
-            position: 'top'
-        });
-        console.warn(dispatch);
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: "jkjkjasd"
-        });
-    };*/
-    /* return({
-        type: LOGIN_SUCCESS,
-        payload: "jkjkjasd"
-    }); */
-    // console.warn(username, password);
 };
 
 export type AuthAction = LoginSuccessAction | LoginFailedAction | LoginLoadingAction;

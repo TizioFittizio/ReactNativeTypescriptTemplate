@@ -14,32 +14,19 @@ import { authReducer } from './reducers/authReducer';
 
 // React Navigator
 import { StackNavigator } from 'react-navigation';
-import { Root } from 'native-base';
+import { Root, Icon } from 'native-base';
 
 // Containers
 import Authentication from './containers/Authentication';
 import { Home } from './pages/Home';
+import { Container } from 'native-base';
+import Routes from './Routes';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
   android: 'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
-});
-
-const Routes = StackNavigator({
-  Home: {
-    screen: Home,
-    navigationOptions: {
-      title: 'ReactNative + Typescript!'
-    }
-  },
-  Authentication: {
-    screen: Authentication,
-    navigationOptions: {
-      title: 'Authenticate'
-    }
-  }
 });
 
 const store = createStore(reducers, {}, applyMiddleware(thunk));

@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Text, View, Item, Input, Icon, Button, Spinner } from 'native-base';
 import { NavigationScreenProp } from "react-navigation";
 import { StyleSheet } from 'react-native';
+import MenuService from './../services/MenuService';
 
 export interface AuthenticationState {
     email: string;
@@ -23,9 +24,21 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
             email: "",
             password: ""
         };
+        MenuService.getInstance().setMenuItems([
+            {
+                text: 'Test',
+                callback: () => console.warn("!!!!!!!!!!!!!!!!!!!!!!!!"),
+                icon: "american-football",
+                iconColor: "#2c8ef4"
+            }
+        ]);
     }
 
-    login(){
+    public onNavigationMenuPressed(){
+        console.warn(JSON.stringify(this));
+    }
+
+    attemptLogin(){
         this.props.login!(this.state.email, this.state.password);
     }
 
@@ -33,7 +46,7 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
         if (!this.props.isAuthenticating){
             return (
                 <Button
-                    onPress={() => this.login()}
+                    onPress={() => this.attemptLogin()}
                     block
                     style={styles.loginButton}
                 >
@@ -43,7 +56,7 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
         }
         else {
             return (
-                <Spinner color="blue" size="large" />
+                <Spinner color="blue" size={64} />
             );
         }
     }

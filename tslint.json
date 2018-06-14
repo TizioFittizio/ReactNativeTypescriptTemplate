@@ -53,7 +53,6 @@
 		"no-trailing-whitespace": true,
 		"object-literal-sort-keys": false,
 		"align": [true],
-		"class-name": true,
 		"comment-format": [true, "check-space"],
 		"interface-name": [false],
 		"jsdoc-format": true,
