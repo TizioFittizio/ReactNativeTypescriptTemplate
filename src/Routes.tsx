@@ -7,9 +7,11 @@ import AuthenticationContainer from "./containers/Authentication";
 import { Authentication } from "./pages/Authentication";
 import MenuService from "./services/MenuService";
 
-const MenuIcon = (
+const MenuIcon = (menuTitle: string) => (
     <View marginRight={20}>
-        <Icon type="Ionicons" name="menu" onPress={MenuService.getInstance().openMenu.bind(MenuService.getInstance())}/>
+        <Icon type="Ionicons" name="menu" onPress={
+          MenuService.getInstance().openMenu.bind(MenuService.getInstance(), true, menuTitle)
+        }/>
     </View>
 );
 
@@ -24,7 +26,7 @@ export default StackNavigator({
       screen: AuthenticationContainer,
       navigationOptions: {
         title: 'Authenticate',
-        headerRight: MenuIcon
+        headerRight: MenuIcon('Authentication')
       }
     }
 });

@@ -3,6 +3,7 @@ import { Container, Text, View, Item, Input, Icon, Button, Spinner } from 'nativ
 import { NavigationScreenProp } from "react-navigation";
 import { StyleSheet } from 'react-native';
 import MenuService from './../services/MenuService';
+import { Alert } from "react-native";
 
 export interface AuthenticationState {
     email: string;
@@ -26,16 +27,16 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
         };
         MenuService.getInstance().setMenuItems([
             {
-                text: 'Test',
-                callback: () => console.warn("!!!!!!!!!!!!!!!!!!!!!!!!"),
-                icon: "american-football",
-                iconColor: "#2c8ef4"
+                text: 'Show test credentials',
+                callback: this.showTestCredentials,
+                icon: "key",
+                iconColor: "#d89817"
             }
         ]);
     }
 
-    public onNavigationMenuPressed(){
-        console.warn(JSON.stringify(this));
+    showTestCredentials(){
+        Alert.alert('Credentials', 'Email: john@doe.com\nPassword: admin');
     }
 
     attemptLogin(){

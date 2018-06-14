@@ -41,7 +41,7 @@ export default class MenuService {
         this.menuItems = menuItems;
     }
 
-    public openMenu(cancelItem: boolean = true, title?: string, destructiveIndex?: number){
+    public openMenu(cancelItem: boolean = true, title: string, destructiveIndex?: number){
         const actionSheetOptions: ActionSheetOptions = {
             options: this.menuItems.slice()
         };
