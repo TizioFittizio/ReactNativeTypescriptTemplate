@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_LOADING, LOGIN_PRELOAD_USER, StorageKey } from './../constants';
+import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_LOADING, StorageKey, LOGIN_LOGOUT } from './../constants';
 import { LoginSuccessAction } from './authActions';
 import { Toast } from 'native-base';
 import { Dispatch } from 'react-redux';
@@ -17,6 +17,10 @@ export interface LoginSuccessAction {
 
 export interface LoginFailedAction {
     type: LOGIN_FAILED;
+}
+
+export interface LoginLogoutAction {
+    type: LOGIN_LOGOUT;
 }
 
 export const preLoadUser = () => {
@@ -62,4 +66,13 @@ export const login = (username: string, password: string) => {
     };
 };
 
-export type AuthAction = LoginSuccessAction | LoginFailedAction | LoginLoadingAction;
+export const logout = () => {
+    return async (dispatch: Dispatch) => {
+        StorageService.getInstance().remove(StorageKey.USER_AUTHENTICATED);
+        dispatch({
+            type: LOGIN_LOGOUT
+        });
+    };
+};
+
+export type AuthAction = LoginSuccessAction | LoginFailedAction | LoginLoadingAction | LoginLogoutAction;

@@ -16,6 +16,7 @@ export interface AuthenticationProps {
     userProfile?: User;
     login?: (username: string, password: string) => void;
     preLoadUser?: () => void;
+    logout?: () => void;
     isAuthenticating: boolean;
 }
 
@@ -47,7 +48,7 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
         MenuService.getInstance().setMenuItems([
             {
                 text: 'Logout',
-                callback: () => console.warn('!'),
+                callback: () => this.props.logout!(),
                 icon: "log-out",
                 iconColor: "#4286f4"
             }
