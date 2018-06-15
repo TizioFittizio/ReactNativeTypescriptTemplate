@@ -15,6 +15,7 @@ export interface AuthenticationProps {
     navigation?: NavigationScreenProp<AuthenticationState>;
     userProfile?: User;
     login?: (username: string, password: string) => void;
+    preLoadUser?: () => void;
     isAuthenticating: boolean;
 }
 
@@ -26,6 +27,11 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
             email: "",
             password: ""
         };
+    }
+
+    componentWillMount(){
+        this.setMenuNotLogged();
+        this.props.preLoadUser!();
     }
 
     componentWillReceiveProps(nextProps: AuthenticationProps){
