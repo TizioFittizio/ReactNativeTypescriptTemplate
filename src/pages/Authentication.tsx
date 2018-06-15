@@ -26,6 +26,29 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
             email: "",
             password: ""
         };
+    }
+
+    componentWillReceiveProps(nextProps: AuthenticationProps){
+        if (nextProps.userProfile){
+            this.setMenuLogged();
+        }
+        else {
+            this.setMenuNotLogged();
+        }
+    }
+
+    setMenuLogged(){
+        MenuService.getInstance().setMenuItems([
+            {
+                text: 'Logout',
+                callback: () => console.warn('!'),
+                icon: "log-out",
+                iconColor: "#4286f4"
+            }
+        ]);
+    }
+
+    setMenuNotLogged(){
         MenuService.getInstance().setMenuItems([
             {
                 text: 'Show test credentials',
@@ -103,8 +126,8 @@ export class Authentication extends React.Component<AuthenticationProps, Authent
             <Container style={styles.container}>
                 <Content>
                     <H1>You are logged as {firstName} {lastName} !</H1>
-                    <H3> • You will stay logged even if you close the application</H3>
-                    <H3> • You can logout from the top menu</H3>
+                    <Text> • You will stay logged even if you close the application</Text>
+                    <Text> • You can logout from the top menu</Text>
                 </Content>
             </Container>
         );

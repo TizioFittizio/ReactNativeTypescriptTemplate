@@ -6,3 +6,6 @@ export type LOGIN_FAILED = typeof LOGIN_FAILED;
 
 export const LOGIN_LOADING = 'LOGIN_LOADING';
 export type LOGIN_LOADING = typeof LOGIN_LOADING;
+
+export const LOGIN_PRELOAD_USER = 'LOGIN_PRELOAD_USER';
+export type LOGIN_PRELOAD_USER = typeof LOGIN_PRELOAD_USER;
