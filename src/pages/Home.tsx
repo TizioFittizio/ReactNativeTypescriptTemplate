@@ -16,11 +16,14 @@ export class Home extends React.Component<Props, State> {
 
     constructor(props: Props){
         super(props);
-        this.onListItemAuthenticationPressed = this.onListItemAuthenticationPressed.bind(this);
     }
 
     onListItemAuthenticationPressed() {
         this.props.navigation.navigate('Authentication');
+    }
+
+    onListItemFormPressed(){
+        this.props.navigation.navigate('Form');
     }
 
     /**
@@ -50,7 +53,7 @@ export class Home extends React.Component<Props, State> {
             <Container>
                 <Content>
                     <List>
-                        <ListItem icon onPress={this.onListItemAuthenticationPressed}>
+                        <ListItem icon onPress={() => this.onListItemAuthenticationPressed()}>
                             <Left>
                                 <Icon type="Ionicons" name="key" />
                             </Left>
@@ -58,7 +61,7 @@ export class Home extends React.Component<Props, State> {
                                 <Text>Authentication</Text>
                             </Body>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={() => this.onListItemFormPressed()}>
                             <Left>
                                 <Icon type="Ionicons" name="clipboard" />
                             </Left>

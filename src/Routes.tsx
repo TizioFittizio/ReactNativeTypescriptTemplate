@@ -3,9 +3,9 @@ import { Icon } from "native-base";
 import React from "react";
 import { StackNavigator } from "react-navigation";
 import { Home } from "./pages/Home";
-import AuthenticationContainer from "./containers/Authentication";
-import { Authentication } from "./pages/Authentication";
 import MenuService from "./services/MenuService";
+import Form from "./containers/Form";
+import Authentication from "./containers/Authentication";
 
 const MenuIcon = (menuTitle: string) => (
     <View marginRight={20}>
@@ -23,10 +23,17 @@ export default StackNavigator({
       }
     },
     Authentication: {
-      screen: AuthenticationContainer,
+      screen: Authentication,
       navigationOptions: {
         title: 'Authenticate',
         headerRight: MenuIcon('Authentication')
+      }
+    },
+    Form: {
+      screen: Form,
+      navigationOptions: {
+        title: 'Form',
+        headerRight: MenuIcon('Form')
       }
     }
 });
