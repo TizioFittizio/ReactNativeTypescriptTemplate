@@ -21,7 +21,6 @@ export default class User implements IStorable {
     }
 
     convertToString(): string {
-        console.warn('Salvato!');
         return JSON.stringify(this);
     }
 
