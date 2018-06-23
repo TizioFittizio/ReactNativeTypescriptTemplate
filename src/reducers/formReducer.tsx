@@ -21,11 +21,13 @@ export const formReducer = (state: FormProps = INITIAL_STATE, action: FormAction
         case FORM_SUBMIT:
             const validUsername = validateUsername(state.username);
             const validPassword = validatePassword(state.password);
+            const validBirthday = validateBirthday(state.birthday);
             return {
                 ...state,
                 usernameError: validUsername !== true ? validUsername : "",
                 passwordError: validPassword !== true ? validPassword : "",
-                success: validUsername === true && validPassword === true
+                birthdayError: validBirthday !== true ? validBirthday : "",
+                success: validUsername === true && validPassword === true && validBirthday === true
             };
         case FORM_CHANGE:
             const propertyChanged = (action as IFormChangeAction).payload;
@@ -33,7 +35,8 @@ export const formReducer = (state: FormProps = INITIAL_STATE, action: FormAction
                 ...state,
                 [propertyChanged.property]: propertyChanged.value,
                 usernameError: propertyChanged.property === 'username' ? "" : state.usernameError,
-                passwordError: propertyChanged.property === 'password' ? "" : state.passwordError
+                passwordError: propertyChanged.property === 'password' ? "" : state.passwordError,
+                birthdayError: propertyChanged.property === 'birthday' ? "" : state.birthdayError
             };
         default:
             return INITIAL_STATE;
@@ -59,6 +62,14 @@ const validatePassword = (password: string): (string | true) => {
     }
     if (password.length < 6){
         return 'Password is too short';
+    }
+    return true;
+};
+
+const validateBirthday = (birthday: Date): (string | true) => {
+    const today = new Date();
+    if (birthday > today){
+        return 'Cannot use a future date';
     }
     return true;
 };

@@ -1,4 +1,3 @@
 Menu deve essere con picker non con menu sotto (va a capire che esiste)
 Focus alternato in login
-Refactoring costanti (tutte in un unico file), enumeratori che iniziano con e
-Tutte le interfacce che iniziano con i
+Service per date picker, magari anche per toast e altre activity

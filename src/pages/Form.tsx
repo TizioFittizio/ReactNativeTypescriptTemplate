@@ -4,6 +4,8 @@ import { NavigationScreenProp } from "react-navigation";
 import { StyleSheet } from 'react-native';
 import { EGender } from "../common/Enums";
 import { IPropertyChanged } from "../actions/formActions";
+import { DatePickerAndroid } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 export interface FormState {
 
@@ -43,7 +45,7 @@ export class Form extends React.Component<FormProps, FormState> {
                 type: "success"
             });
             this.props.navigation!.navigate('Home');
-            this.props.reset!();
+            setTimeout(() => this.props.reset!(), 200);
         }
     }
 
@@ -72,6 +74,23 @@ export class Form extends React.Component<FormProps, FormState> {
 
     onButtonSubmit(){
         this.props.submit!();
+    }
+
+    // Maybe this can be made in an util service
+    // TODO iOS
+    selectBirthday = async () => {
+        try {
+            const today = new Date();
+            const {action, year, month, day} = await DatePickerAndroid.open({
+              date: today
+            });
+            if (action !== DatePickerAndroid.dismissedAction) {
+              this.changeProperty('birthday', new Date(year || today.getFullYear(), month || today.getMonth(), day || today.getDate()));
+            }
+        }
+        catch ({code, message}) {
+            console.warn('Cannot open date picker', message);
+        }
     }
 
     render(){
@@ -121,19 +140,14 @@ export class Form extends React.Component<FormProps, FormState> {
 
                     <Item error={birthdayError.length > 0} inlineLabel style={styles.itemStyle}>
                         <Label style={styles.itemLabelStyle}>Birthday</Label>
-                        <DatePicker
-                            defaultDate={birthday}
-                            minimumDate={new Date(2018, 1, 1)}
-                            maximumDate={new Date(2018, 12, 31)}
-                            locale={"it"}
-                            timeZoneOffsetInMinutes={undefined}
-                            modalTransparent={true}
-                            animationType={"fade"}
-                            androidMode={"default"}
-                            onDateChange={value => this.changeProperty('birthday', value)}
-                        />
+                        <TouchableOpacity onPress={() => this.selectBirthday()}>
+                            <Input
+                                editable={false}
+                                value={birthday.toLocaleDateString()}/>
+                        </TouchableOpacity>
                         {this.renderErrorIcon(birthdayError.length > 0)}
                     </Item>
+                    {this.renderErrorDescription(birthdayError.length > 0, birthdayError)}
 
                     <Button
                         block
