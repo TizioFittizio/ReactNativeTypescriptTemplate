@@ -15,3 +15,6 @@ export type FORM_SUBMIT = typeof FORM_SUBMIT;
 
 export const FORM_CHANGE = 'FORM_CHANGE';
 export type FORM_CHANGE = typeof FORM_CHANGE;
+
+export const FORM_RESET = 'FORM_RESET';
+export type FORM_RESET = typeof FORM_RESET;

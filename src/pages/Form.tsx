@@ -12,21 +12,35 @@ export interface FormState {
 export interface FormProps {
     navigation?: NavigationScreenProp<FormState>;
     username: string;
-    usernameError: boolean;
+    usernameError: string;
     password: string;
-    passwordError: boolean;
+    passwordError: string;
     gender: Gender;
     notification: boolean;
     birthday: Date;
-    birthdayError: boolean;
+    birthdayError: string;
     submit?: () => void;
     change?: (propertychanged: PropertyChanged) => void;
+    reset?: () => void;
+    success: boolean;
 }
 
 export class Form extends React.Component<FormProps, FormState> {
 
     constructor(props: FormProps){
         super(props);
+    }
+
+    componentWillReceiveProps(nextProps: FormProps){
+        if (nextProps.success){
+            Toast.show({
+                text: "Success",
+                position: "center",
+                type: "success"
+            });
+            this.props.navigation!.navigate('Home');
+            this.props.reset!();
+        }
     }
 
     changeProperty(property: string, value: any){
@@ -43,42 +57,65 @@ export class Form extends React.Component<FormProps, FormState> {
         else return null;
     }
 
+    renderErrorDescription(condition: boolean, message: string){
+        if (condition){
+            return (
+                <Text style={styles.errorDescriptionStyle}>{message}</Text>
+            );
+        }
+        else return null;
+    }
+
+    onButtonSubmit(){
+        this.props.submit!();
+    }
+
     render(){
         const {username, usernameError, password, passwordError, gender, notification, birthday, birthdayError} = this.props;
         return (
             <Container>
                 <Content>
-                    <Item error={usernameError} inlineLabel style={styles.itemStyle}>
+
+                    <Item error={usernameError.length > 0} inlineLabel style={styles.itemStyle}>
                         <Label style={styles.itemLabelStyle}>Username</Label>
                         <Input
-                            onChangeText={text => this.changeProperty('username', text)}
+                            onChangeText={value => this.changeProperty('username', value)}
                             value={username}/>
-                        {this.renderErrorIcon(usernameError)}
+                        {this.renderErrorIcon(usernameError.length > 0)}
                     </Item>
-                    <Item error={passwordError} inlineLabel style={styles.itemStyle}>
+                    {this.renderErrorDescription(usernameError.length > 0, usernameError)}
+
+                    <Item error={passwordError.length > 0} inlineLabel style={styles.itemStyle}>
                         <Label style={styles.itemLabelStyle}>Password</Label>
                         <Input
+                            onChangeText={value => this.changeProperty('password', value)}
                             secureTextEntry
                             value={password}/>
-                        {this.renderErrorIcon(passwordError)}
+                        {this.renderErrorIcon(passwordError.length > 0)}
                     </Item>
+                    {this.renderErrorDescription(passwordError.length > 0, passwordError)}
+
                     <Item inlineLabel style={styles.itemStyle}>
                         <Label style={styles.itemLabelStyle}>Gender</Label>
                         <Picker
                             mode="dropdown"
-                            iosHeader="Select your SIM"
+                            iosHeader="Select your Gender"
                             iosIcon={<Icon name="ios-arrow-down-outline" />}
                             selectedValue={gender}
-                            onValueChange={(value: string) => Toast.show({text: value + ' changed'})}>
+                            onValueChange={value => this.changeProperty('gender', value)}>
                             <Picker.Item label="Male" value={Gender.MALE} />
                             <Picker.Item label="Fermale" value={Gender.FERMALE} />
                         </Picker>
                     </Item>
+
                     <Item inlineLabel style={styles.itemStyle}>
                         <Label style={styles.itemLabelStyle}>Notification</Label>
-                        <CheckBox checked={notification} />
+                        <CheckBox
+                            onPress={() => this.changeProperty('notification', !notification)}
+                            checked={notification} />
                     </Item>
-                    <Item error={birthdayError} inlineLabel style={styles.itemStyle}>
+
+                    <Item error={birthdayError.length > 0} inlineLabel style={styles.itemStyle}>
                         <Label style={styles.itemLabelStyle}>Birthday</Label>
                         <DatePicker
                             defaultDate={birthday}
@@ -89,11 +126,15 @@ export class Form extends React.Component<FormProps, FormState> {
                             modalTransparent={true}
                             animationType={"fade"}
                             androidMode={"default"}
-                            placeHolderText="Select date"
+                            onDateChange={value => this.changeProperty('birthday', value)}
                         />
-                        {this.renderErrorIcon(birthdayError)}
+                        {this.renderErrorIcon(birthdayError.length > 0)}
                     </Item>
-                    <Button block style={styles.buttonConfirmStyle}>
+
+                    <Button
+                        block
+                        style={styles.buttonConfirmStyle}
+                        onPress={() => this.onButtonSubmit()}>
                         <Text>Confirm</Text>
                     </Button>
                 </Content>
@@ -113,5 +154,9 @@ const styles = StyleSheet.create({
     },
     buttonConfirmStyle: {
         margin: 20
+    },
+    errorDescriptionStyle: {
+        marginLeft: 20,
+        color: 'red'
     }
 });

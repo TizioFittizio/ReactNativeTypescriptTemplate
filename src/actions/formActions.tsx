@@ -1,5 +1,5 @@
 
-import { FORM_SUBMIT, FORM_CHANGE } from './../constants/actionTypes';
+import { FORM_SUBMIT, FORM_CHANGE, FORM_RESET } from './../constants/actionTypes';
 
 export interface PropertyChanged {
     property: string;
@@ -15,6 +15,10 @@ export interface FormChangeAction {
     payload: PropertyChanged;
 }
 
+export interface FormResetAction {
+    type: FORM_RESET;
+}
+
 export const change = (propertychanged: PropertyChanged) => {
     return {
         type: FORM_CHANGE,
@@ -23,7 +27,15 @@ export const change = (propertychanged: PropertyChanged) => {
 };
 
 export const submit = () => {
-    
-}
+    return {
+        type: FORM_SUBMIT
+    };
+};
+
+export const reset = () => {
+    return {
+        type: FORM_RESET
+    };
+};
 
 export type FormAction = FormSubmitAction | FormChangeAction;
