@@ -2,8 +2,8 @@ import React from "react";
 import { Container, Header, Content, Item, Icon, Input, Label, Picker, Toast, CheckBox, DatePicker, Button, Text } from "native-base";
 import { NavigationScreenProp } from "react-navigation";
 import { StyleSheet } from 'react-native';
-import { Gender } from "../constants/Gender";
-import { PropertyChanged } from "../actions/formActions";
+import { EGender } from "../common/Enums";
+import { IPropertyChanged } from "../actions/formActions";
 
 export interface FormState {
 
@@ -15,12 +15,12 @@ export interface FormProps {
     usernameError: string;
     password: string;
     passwordError: string;
-    gender: Gender;
+    gender: EGender;
     notification: boolean;
     birthday: Date;
     birthdayError: string;
     submit?: () => void;
-    change?: (propertychanged: PropertyChanged) => void;
+    change?: (propertychanged: IPropertyChanged) => void;
     reset?: () => void;
     success: boolean;
 }
@@ -29,6 +29,10 @@ export class Form extends React.Component<FormProps, FormState> {
 
     constructor(props: FormProps){
         super(props);
+    }
+
+    componentWillMount(){
+        this.props.reset!();
     }
 
     componentWillReceiveProps(nextProps: FormProps){
@@ -103,8 +107,8 @@ export class Form extends React.Component<FormProps, FormState> {
                             iosIcon={<Icon name="ios-arrow-down-outline" />}
                             selectedValue={gender}
                             onValueChange={value => this.changeProperty('gender', value)}>
-                            <Picker.Item label="Male" value={Gender.MALE} />
-                            <Picker.Item label="Fermale" value={Gender.FERMALE} />
+                            <Picker.Item label="Male" value={EGender.MALE} />
+                            <Picker.Item label="Fermale" value={EGender.FERMALE} />
                         </Picker>
                     </Item>
 

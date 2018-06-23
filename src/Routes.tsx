@@ -32,8 +32,7 @@ export default StackNavigator({
     Form: {
       screen: Form,
       navigationOptions: {
-        title: 'Form',
-        headerRight: MenuIcon('Form')
+        title: 'Form'
       }
     }
 });

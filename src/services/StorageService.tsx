@@ -1,6 +1,10 @@
-import { StorageKey } from "../constants";
 import { AsyncStorage } from "react-native";
-import IStorable from './../common/IStorable';
+import { EStorageKey } from "../common/Enums";
+
+export interface IStorable {
+    convertToString(): string;
+    convertFromString(object: string): any;
+}
 
 export default class StorageService {
 
@@ -17,7 +21,7 @@ export default class StorageService {
         return StorageService.instance;
     }
 
-    public async set(key: StorageKey, item: any): Promise<boolean> {
+    public async set(key: EStorageKey, item: any): Promise<boolean> {
         try {
             if (typeof item === 'string'){
                 await AsyncStorage.setItem(key.toString(), item.toString());
@@ -33,7 +37,7 @@ export default class StorageService {
         }
     }
 
-    public async getString(key: StorageKey): Promise<string | null> {
+    public async getString(key: EStorageKey): Promise<string | null> {
         try {
             const value = await AsyncStorage.getItem(key.toString());
             if (value !== null){
@@ -47,7 +51,7 @@ export default class StorageService {
         }
     }
 
-    public async getObject<T>(key: StorageKey, object: IStorable): Promise<IStorable | null> {
+    public async getObject<T>(key: EStorageKey, object: IStorable): Promise<IStorable | null> {
         try {
             const value = await AsyncStorage.getItem(key.toString());
             if (value !== null){
@@ -62,7 +66,7 @@ export default class StorageService {
         }
     }
 
-    public async remove(key: StorageKey): Promise<boolean> {
+    public async remove(key: EStorageKey): Promise<boolean> {
         try {
             await AsyncStorage.removeItem(key.toString());
             return true;

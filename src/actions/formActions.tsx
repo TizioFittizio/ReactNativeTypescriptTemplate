@@ -1,25 +1,24 @@
+import { FORM_SUBMIT, FORM_CHANGE, FORM_RESET } from "./actionTypes";
 
-import { FORM_SUBMIT, FORM_CHANGE, FORM_RESET } from './../constants/actionTypes';
-
-export interface PropertyChanged {
+export interface IPropertyChanged {
     property: string;
     value: any;
 }
 
-export interface FormSubmitAction {
+export interface IFormSubmitAction {
     type: FORM_SUBMIT;
 }
 
-export interface FormChangeAction {
+export interface IFormChangeAction {
     type: FORM_CHANGE;
-    payload: PropertyChanged;
+    payload: IPropertyChanged;
 }
 
-export interface FormResetAction {
+export interface IFormResetAction {
     type: FORM_RESET;
 }
 
-export const change = (propertychanged: PropertyChanged) => {
+export const change = (propertychanged: IPropertyChanged) => {
     return {
         type: FORM_CHANGE,
         payload: propertychanged
@@ -38,4 +37,4 @@ export const reset = () => {
     };
 };
 
-export type FormAction = FormSubmitAction | FormChangeAction;
+export type FormAction = IFormSubmitAction | IFormChangeAction;

@@ -1,8 +1,7 @@
 import { FormProps } from "../pages/Form";
-import { FormAction, FormChangeAction } from "../actions/formActions";
-import { Gender } from "../constants/Gender";
-import { FORM_CHANGE } from "../constants";
-import { FORM_SUBMIT } from './../constants/actionTypes';
+import { EGender } from "../common/Enums";
+import { FormAction, IFormChangeAction } from "../actions/formActions";
+import { FORM_SUBMIT, FORM_CHANGE } from "../actions/actionTypes";
 
 // You may want to use different properties for errors
 const INITIAL_STATE = {
@@ -10,7 +9,7 @@ const INITIAL_STATE = {
     usernameError: "",
     password: "",
     passwordError: "",
-    gender: Gender.MALE,
+    gender: EGender.MALE,
     notification: true,
     birthday: new Date(),
     birthdayError: "",
@@ -29,7 +28,7 @@ export const formReducer = (state: FormProps = INITIAL_STATE, action: FormAction
                 success: validUsername === true && validPassword === true
             };
         case FORM_CHANGE:
-            const propertyChanged = (action as FormChangeAction).payload;
+            const propertyChanged = (action as IFormChangeAction).payload;
             return {
                 ...state,
                 [propertyChanged.property]: propertyChanged.value,

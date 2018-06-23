@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body, Toast } from 'native-base';
 import { StyleSheet, Linking } from 'react-native';
-import { CONTRIBUTE_URL } from './../constants';
 import { NavigationScreenProp } from 'react-navigation';
+import Constants from '../common/Costants';
 
 interface State {
 
@@ -32,9 +32,9 @@ export class Home extends React.Component<Props, State> {
      */
     async onListItemContributePressed(){
         try {
-            const canOpenUrl = await Linking.canOpenURL(CONTRIBUTE_URL);
+            const canOpenUrl = await Linking.canOpenURL(Constants.ContributeUrl);
             if (canOpenUrl) {
-                Linking.openURL(CONTRIBUTE_URL);
+                Linking.openURL(Constants.ContributeUrl);
             }
             else {
                 throw new Error('Can\'t open url');

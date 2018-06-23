@@ -1,4 +1,4 @@
-import IStorable from './../common/IStorable';
+import { IStorable } from "../services/StorageService";
 
 export default class User implements IStorable {
 

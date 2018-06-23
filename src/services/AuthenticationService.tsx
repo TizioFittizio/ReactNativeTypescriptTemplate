@@ -1,8 +1,7 @@
 import axios from "axios";
-import { LOGIN_URL } from "../constants";
 import ServiceReponse from './../models/ServiceResponse';
 import User from "../models/User";
-import { testCredentials } from './../constants/testCredentials';
+import Constants from "../common/Costants";
 
 export default class AuthenticationService {
 
@@ -44,7 +43,7 @@ export default class AuthenticationService {
             await new Promise((resolve) => {
                 setTimeout(resolve, 2000);
             });
-            if (username === testCredentials.email && password === testCredentials.password) {
+            if (username === Constants.TestCredentials.email && password === Constants.TestCredentials.password) {
                 const userReturned = new User();
                 userReturned.firstName = "John";
                 userReturned.lastName = "Doe";

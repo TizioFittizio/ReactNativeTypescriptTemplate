@@ -1,31 +1,31 @@
-import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_LOADING, StorageKey, LOGIN_LOGOUT } from './../constants';
-import { LoginSuccessAction } from './authActions';
 import { Toast } from 'native-base';
 import { Dispatch } from 'react-redux';
 import AuthenticationService from './../services/AuthenticationService';
 import User from './../models/User';
 import StorageService from './../services/StorageService';
+import { LOGIN_LOADING, LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_LOGOUT } from './actionTypes';
+import { EStorageKey } from '../common/Enums';
 
-export interface LoginLoadingAction {
+export interface ILoginLoadingAction {
     type: LOGIN_LOADING;
 }
 
-export interface LoginSuccessAction {
+export interface ILoginSuccessAction {
     type: LOGIN_SUCCESS;
     payload: User;
 }
 
-export interface LoginFailedAction {
+export interface ILoginFailedAction {
     type: LOGIN_FAILED;
 }
 
-export interface LoginLogoutAction {
+export interface ILoginLogoutAction {
     type: LOGIN_LOGOUT;
 }
 
 export const preLoadUser = () => {
     return async (dispatch: Dispatch) => {
-        const userLogged = await StorageService.getInstance().getObject(StorageKey.USER_AUTHENTICATED, new User());
+        const userLogged = await StorageService.getInstance().getObject(EStorageKey.USER_AUTHENTICATED, new User());
         if (userLogged !== null){
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -57,7 +57,7 @@ export const login = (username: string, password: string) => {
                 position: 'top',
                 type: 'success'
             });
-            StorageService.getInstance().set(StorageKey.USER_AUTHENTICATED, loginResponse.response);
+            StorageService.getInstance().set(EStorageKey.USER_AUTHENTICATED, loginResponse.response);
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: loginResponse.response
@@ -68,11 +68,11 @@ export const login = (username: string, password: string) => {
 
 export const logout = () => {
     return async (dispatch: Dispatch) => {
-        StorageService.getInstance().remove(StorageKey.USER_AUTHENTICATED);
+        StorageService.getInstance().remove(EStorageKey.USER_AUTHENTICATED);
         dispatch({
             type: LOGIN_LOGOUT
         });
     };
 };
 
-export type AuthAction = LoginSuccessAction | LoginFailedAction | LoginLoadingAction | LoginLogoutAction;
+export type AuthAction = ILoginSuccessAction | ILoginFailedAction | ILoginLoadingAction | ILoginLogoutAction;
