@@ -2,14 +2,17 @@
 import { ReducersProps } from './../reducers/';
 import { Dispatch, connect } from 'react-redux';
 import { Form } from '../pages/Form';
+import { submit, FormAction, change } from './../actions/formActions';
+import { bindActionCreators } from 'redux';
 
 export function mapStateToProps(state: ReducersProps){
-    return {...state};
+    return { ...state.form };
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<any>) {
+export function mapDispatchToProps(dispatch: Dispatch<FormAction>) {
     return {
-        a: "b"
+        submit: bindActionCreators(submit, dispatch),
+        change: bindActionCreators(change, dispatch)
     };
 }
 
