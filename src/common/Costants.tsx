@@ -10,4 +10,7 @@ export default class Constants {
         password: 'admin'
     };
 
+    // Images
+    public static ImageStawberries = '../../assets/images/oranges.jpg';
+
 }

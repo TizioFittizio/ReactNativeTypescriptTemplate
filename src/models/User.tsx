@@ -20,6 +20,13 @@ export default class User implements IStorable {
         this.token = "";
     }
 
+    public static getDummyUser(){
+        const u = new User();
+        u.id = -1;
+        u.nickname = "Dummy";
+        return u;
+    }
+
     convertToString(): string {
         return JSON.stringify(this);
     }

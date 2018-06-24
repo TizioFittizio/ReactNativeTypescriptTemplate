@@ -2,6 +2,7 @@ import React from "react";
 import { H1, Container, Content } from "native-base";
 import CardComponent from './../components/CardComponent';
 import { StyleSheet } from 'react-native';
+import Constants from "../common/Costants";
 
 export interface CardsState {
 
@@ -21,13 +22,12 @@ export class Cards extends React.Component<CardsProps, CardsState> {
         return (
             <Container>
                 <Content style={styles.contentStyle}>
-                    <CardComponent
+                    {/*<CardComponent
                         title='Eheh'
-                        image={require('../../assets/images/oranges.jpg')}
+                        image={image}
                         // tslint:disable-next-line:max-line-length
-                        post='Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla'
                         likes={5}
-                        comments={10}/>
+                    comments={10}/>*/}
                 </Content>
             </Container>
         );
