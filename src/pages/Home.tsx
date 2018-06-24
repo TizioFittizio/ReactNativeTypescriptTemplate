@@ -26,6 +26,10 @@ export class Home extends React.Component<Props, State> {
         this.props.navigation.navigate('Form');
     }
 
+    onListItemCardsPressed(){
+        this.props.navigation.navigate('Cards');
+    }
+
     /**
      * Function executed on contribute item pressed
      * Attempt to open repository URL
@@ -69,7 +73,7 @@ export class Home extends React.Component<Props, State> {
                                 <Text>Form</Text>
                             </Body>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={() => this.onListItemCardsPressed()}>
                             <Left>
                                 <Icon type="Ionicons" name="thumbs-up" />
                             </Left>

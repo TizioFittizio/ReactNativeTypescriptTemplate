@@ -1,3 +1,5 @@
 Menu deve essere con picker non con menu sotto (va a capire che esiste)
 Focus alternato in login
 Service per date picker, magari anche per toast e altre activity
+Nomi delle pagine in costanti
+Rinominare componenti (ad esempio le pagine devno finire con page, i container con container ecc.)

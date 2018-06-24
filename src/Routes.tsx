@@ -6,6 +6,7 @@ import { Home } from "./pages/Home";
 import MenuService from "./services/MenuService";
 import Form from "./containers/Form";
 import Authentication from "./containers/Authentication";
+import Cards from "./containers/Cards";
 
 const MenuIcon = (menuTitle: string) => (
     <View marginRight={20}>
@@ -33,6 +34,12 @@ export default StackNavigator({
       screen: Form,
       navigationOptions: {
         title: 'Form'
+      }
+    },
+    Cards: {
+      screen: Cards,
+      navigationOptions: {
+        title: 'Cards'
       }
     }
 });
