@@ -10,6 +10,7 @@ export default class Post {
     public text: string;
     public likes: number;
     public comments: Comment[];
+    public id: number;
 
     constructor(){
         this.author = User.getDummyUser();
@@ -18,6 +19,7 @@ export default class Post {
         this.text = '';
         this.likes = 0;
         this.comments = [];
+        this.id = 0;
     }
 
     public static getDummyPost(){

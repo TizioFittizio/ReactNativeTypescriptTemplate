@@ -3,6 +3,9 @@ import { Text, View, Container, Content, H1, List, ListItem, Left, Icon, Body, T
 import { StyleSheet, Linking } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import Constants from '../common/Costants';
+import StorageService from '../services/StorageService';
+import { EStorageKey } from '../common/Enums';
+import User from '../models/User';
 
 interface State {
 
@@ -26,8 +29,18 @@ export class Home extends React.Component<Props, State> {
         this.props.navigation.navigate('Form');
     }
 
-    onListItemCardsPressed(){
-        this.props.navigation.navigate('Cards');
+    async onListItemCardsPressed(){
+        const userLogged = await StorageService.getInstance().getObject(EStorageKey.USER_AUTHENTICATED, new User());
+        if (!userLogged){
+            Toast.show({
+                text: 'You should be logged!',
+                position: 'bottom',
+                type: 'warning'
+            });
+        }
+        else {
+            this.props.navigation.navigate('Cards');
+        }
     }
 
     /**

@@ -22,7 +22,9 @@ export default class AppService {
 
         const posts = [];
         for (let i = 0; i < 10; i++){
-            posts.push(Post.getDummyPost());
+            const post = Post.getDummyPost();
+            post.id = i;
+            posts.push(post);
         }
 
         return new ServiceReponse<Post[]>(posts);
